@@ -57,3 +57,67 @@ int main() {
     cout << "\nTotal value in knapsack = " << total << endl;
     return 0;
 }
+
+
+Or, 
+
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+struct Item {
+    int profit, weight;
+    double ratio;
+};
+bool comp(const Item& a, const Item& b) {
+    return a.ratio > b.ratio;
+}
+int main() {
+    int n;
+    cout << "Number of items: ";
+    cin >> n;
+    int capacity;
+    cout << "Bag Capacity: ";
+    cin >> capacity;
+    vector<Item> items(n);
+    cout << "Profit: ";
+    for (int i = 0; i < n; i++){
+         cin >> items[i].profit;
+    }
+    cout << "Weight: ";
+    for (int i = 0; i < n; i++)
+    {
+         cin >> items[i].weight;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        items[i].ratio = (double)items[i].profit / items[i].weight;
+    }
+    sort(items.begin(), items.end(), comp);
+    double totalProfit = 0.0;
+    int remCap = capacity;
+    cout << "\nSelected items (fractional allowed):\n";
+    for (int i = 0; i < n; i++) {
+        if (remCap == 0)
+        {
+              break;
+        }
+        if (items[i].weight <= remCap) {
+            remCap -= items[i].weight;
+            totalProfit += items[i].profit;
+            cout << "Item " << i + 1 << "  100% taken\n";
+        } else {
+            double fraction = (double)remCap / items[i].weight;
+            totalProfit += items[i].profit * fraction;
+            cout << "Item " << i + 1 << fraction * 100 << "% taken\n";
+            remCap = 0;
+        }
+    }
+
+    cout << "\nMaximum Profit = " << totalProfit << endl;
+
+    return 0;
+}
+
