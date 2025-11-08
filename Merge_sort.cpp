@@ -74,7 +74,7 @@ int main() {
         }
     }
    
-    for (; i < n; i++, k+) {
+    for (; i < n; i++, k++) {
         arr3[k] = arr1[i];
     }
 
